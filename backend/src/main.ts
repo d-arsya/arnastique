@@ -17,12 +17,14 @@ async function bootstrap() {
   SwaggerModule.setup('api/docs', app, documentFactory, {
     swaggerOptions: { defaultModelsExpandDepth: -1 }
   })
+  /*
   app.setGlobalPrefix('api', {
     exclude: [
       { path: '/', method: RequestMethod.GET },
       { path: '/api', method: RequestMethod.GET }
     ]
   })
+  */
   await app.listen(process.env.PORT ?? 3030)
 }
 bootstrap()
