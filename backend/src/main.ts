@@ -2,7 +2,9 @@ import { NestFactory } from '@nestjs/core'
 import { AppModule } from './app.module'
 import { RequestMethod, ValidationPipe } from '@nestjs/common'
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger'
+import { Server } from 'http'
 
+let server: Server
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
   app.useGlobalPipes(new ValidationPipe())
@@ -18,9 +20,18 @@ async function bootstrap() {
     swaggerOptions: { defaultModelsExpandDepth: -1 }
   })
   app.setGlobalPrefix('api')
-  await app.listen(process.env.PORT ?? 3000)
+  // await app.listen(process.env.PORT ?? 3000)
+  await app.init()
+  server = app.getHttpServer()
 }
 bootstrap()
+
+export default async function handler(req, res) {
+  if (!server) {
+    await bootstrap()
+  }
+  server.emit('request', req, res)
+}
 
 // import { NestFactory } from '@nestjs/core';
 // import { ExpressAdapter } from '@nestjs/platform-express';
