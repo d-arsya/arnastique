@@ -36,9 +36,9 @@ async function bootstrap() {
   server = app.getHttpServer()
 
   // FOR DEVELOPMENT
-  await server.listen(3000, function () {
-    console.log('Listen at port ' + 3000)
-  })
+  // await server.listen(3000, function () {
+  //   console.log('Listen at port ' + 3000)
+  // })
 }
 bootstrap()
 
