@@ -39,18 +39,13 @@ import express from 'express';
 import { createServer, proxy } from 'aws-serverless-express';
 import { Handler, Context, Callback } from 'aws-lambda';
 
-const expressApp = express();
+const server = express();
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, new ExpressAdapter(expressApp));
+  const app = await NestFactory.create(AppModule, new ExpressAdapter(server));
   await app.init();
 }
 
 bootstrap();
 
-const server = createServer(expressApp);
-
-export const handler: Handler = (event: any, context: Context, callback: Callback) => {
-  proxy(server, event, context);
-};
-
+export default server;
