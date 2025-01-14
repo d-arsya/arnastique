@@ -3,6 +3,7 @@ import { AppModule } from './app.module'
 import { RequestMethod, ValidationPipe } from '@nestjs/common'
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger'
 import { Server } from 'http'
+import { Request, Response } from 'express'
 
 let server: Server
 async function bootstrap() {
@@ -17,12 +18,27 @@ async function bootstrap() {
     .build()
   const documentFactory = () => SwaggerModule.createDocument(app, config)
   SwaggerModule.setup('api/docs', app, documentFactory, {
-    swaggerOptions: { defaultModelsExpandDepth: -1 }
+    swaggerOptions: { defaultModelsExpandDepth: -1 },
+    customSiteTitle: 'Arnastique API Documentation',
+    customfavIcon: 'https://avatars.githubusercontent.com/u/102853169?s=200&v=4',
+    customJs: [
+      'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.18.2/swagger-ui-bundle.min.js',
+      'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.18.2/swagger-ui-standalone-preset.min.js'
+    ],
+    customCssUrl: [
+      'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.18.2/swagger-ui.min.css',
+      'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.18.2/swagger-ui-standalone-preset.min.css',
+      'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.18.2/swagger-ui.css'
+    ]
   })
   app.setGlobalPrefix('api')
-  // await app.listen(process.env.PORT ?? 3000)
   await app.init()
   server = app.getHttpServer()
+
+  // FOR DEVELOPMENT
+  await server.listen(3000, function () {
+    console.log('Listen at port ' + 3000)
+  })
 }
 bootstrap()
 
