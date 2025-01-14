@@ -35,7 +35,7 @@ async function bootstrap() {
 import { NestFactory } from '@nestjs/core';
 import { ExpressAdapter } from '@nestjs/platform-express';
 import { AppModule } from './app.module';
-import * as express from 'express';
+import express from 'express';
 import { createServer, proxy } from 'aws-serverless-express';
 import { Handler, Context, Callback } from 'aws-lambda';
 
