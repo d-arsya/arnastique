@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Request, UseGuards }
 import { WalletService } from './wallet.service'
 import { CreateWalletDto } from './dto/create-wallet.dto'
 import { UpdateWalletDto } from './dto/update-wallet.dto'
-import { AuthGuard } from 'src/auth/auth.guard'
+import { AuthGuard } from '../auth/auth.guard'
 import { ApiBearerAuth } from '@nestjs/swagger'
 
 @ApiBearerAuth()
