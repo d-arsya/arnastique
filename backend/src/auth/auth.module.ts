@@ -12,7 +12,7 @@ import config from '../config'
       global: true,
       privateKey: config.JWT_PRIVATE,
       publicKey: config.JWT_PUBLIC,
-      signOptions: { expiresIn: '1d' }
+      signOptions: { expiresIn: '1d',algorithm: 'RS256'}
     })
   ],
   providers: [AuthService],
