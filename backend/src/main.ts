@@ -6,6 +6,7 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger'
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
   app.useGlobalPipes(new ValidationPipe())
+  /*
   const config = new DocumentBuilder()
     .setTitle('Arnastique Backend API')
     .setDescription('Arnastique Backend API description')
@@ -17,6 +18,7 @@ async function bootstrap() {
   SwaggerModule.setup('api/docs', app, documentFactory, {
     swaggerOptions: { defaultModelsExpandDepth: -1 }
   })
+  */
   /*
   app.setGlobalPrefix('api', {
     exclude: [
@@ -25,6 +27,6 @@ async function bootstrap() {
     ]
   })
   */
-  await app.listen(process.env.PORT ?? 3030)
+  await app.listen(process.env.PORT ?? 3000)
 }
 bootstrap()
