@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Request, UseGuards }
 import { UserService } from './user.service'
 import { UpdateUserDto } from './dto/update-user.dto'
 import { ApiBearerAuth } from '@nestjs/swagger'
-import { AuthGuard } from 'src/auth/auth.guard'
+import { AuthGuard } from '../auth/auth.guard'
 
 @ApiBearerAuth()
 @UseGuards(AuthGuard)
