@@ -1,3 +1,4 @@
+/*
 import { NestFactory } from '@nestjs/core'
 import { AppModule } from './app.module'
 import { RequestMethod, ValidationPipe } from '@nestjs/common'
@@ -27,6 +28,29 @@ async function bootstrap() {
     ]
   })
   */
-  await app.listen(process.env.PORT ?? 3000)
+//  await app.listen(process.env.PORT ?? 3000)
+//}
+//bootstrap()
+
+import { NestFactory } from '@nestjs/core';
+import { ExpressAdapter } from '@nestjs/platform-express';
+import { AppModule } from './app.module';
+import * as express from 'express';
+import { createServer, proxy } from 'aws-serverless-express';
+import { Handler, Context, Callback } from 'aws-lambda';
+
+const expressApp = express();
+
+async function bootstrap() {
+  const app = await NestFactory.create(AppModule, new ExpressAdapter(expressApp));
+  await app.init();
 }
-bootstrap()
+
+bootstrap();
+
+const server = createServer(expressApp);
+
+export const handler: Handler = (event: any, context: Context, callback: Callback) => {
+  proxy(server, event, context);
+};
+
