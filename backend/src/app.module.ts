@@ -7,7 +7,7 @@ import { TransactionModule } from './transaction/transaction.module'
 import { AuthModule } from './auth/auth.module'
 
 @Module({
-  imports: [UserModule, WalletModule, CategoryModule, TransactionModule, AuthModule],
+  imports: [AuthModule, UserModule, WalletModule, CategoryModule, TransactionModule],
   controllers: [AppController],
   providers: []
 })

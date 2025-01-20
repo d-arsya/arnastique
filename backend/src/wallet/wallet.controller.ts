@@ -11,15 +11,6 @@ import { ApiBearerAuth } from '@nestjs/swagger'
 export class WalletController {
   constructor(private readonly walletService: WalletService) {}
 
-  @Post()
-  create(@Request() request, @Body() { name }) {
-    const payload = {
-      name: name,
-      userId: request.userId
-    }
-    return this.walletService.create(payload)
-  }
-
   @Get()
   findAll(@Request() request) {
     return this.walletService.findAll(request.userId)
@@ -30,6 +21,14 @@ export class WalletController {
     return this.walletService.findOne(id, request.userId)
   }
 
+  @Post()
+  create(@Request() request, @Body() { name }) {
+    const payload = {
+      name: name,
+      userId: request.userId
+    }
+    return this.walletService.create(payload)
+  }
   @Patch(':id')
   update(@Request() request, @Param('id') id: string, @Body() updateCategoryDto: UpdateWalletDto) {
     return this.walletService.update(id, updateCategoryDto, request.userId)

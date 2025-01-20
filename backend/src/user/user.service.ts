@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common'
+import { BadGatewayException, BadRequestException, Injectable, NotFoundException } from '@nestjs/common'
 import { UpdateUserDto } from './dto/update-user.dto'
 import { PrismaService } from '../prisma.service'
 import { hash } from 'bcrypt'
@@ -14,21 +14,22 @@ export class UserService {
     }
     try {
       const user = await this.prisma.user.create({ data: signUpUserDto })
+      const { password, updatedAt, createdAt, ...result } = user
       return {
-        status: true,
-        code: 201,
-        data: { name: user.name, email: user.email },
+        statusCode: 201,
+        success: true,
+        data: result,
         message: 'User created successfully'
       }
     } catch (error) {
       if (error instanceof PrismaClientKnownRequestError) {
         if (error.code == 'P2002') {
-          return {
-            status: false,
-            code: 400,
+          throw new BadRequestException({
+            statusCode: 400,
+            success: false,
             data: null,
             message: 'The email has been taken'
-          }
+          })
         }
       }
     }

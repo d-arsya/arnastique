@@ -11,15 +11,6 @@ import { ApiBearerAuth, ApiHeader } from '@nestjs/swagger'
 export class CategoryController {
   constructor(private readonly categoryService: CategoryService) {}
 
-  @Post()
-  create(@Request() request, @Body() createCategoryDto: CreateCategoryDto) {
-    const payload = {
-      name: createCategoryDto.name,
-      userId: request.userId
-    }
-    return this.categoryService.create(payload)
-  }
-
   @Get()
   findAll(@Request() request) {
     return this.categoryService.findAll(request.userId)
@@ -28,6 +19,15 @@ export class CategoryController {
   @Get(':id')
   findOne(@Request() request, @Param('id') id: string) {
     return this.categoryService.findOne(id, request.userId)
+  }
+
+  @Post()
+  create(@Request() request, @Body() createCategoryDto: CreateCategoryDto) {
+    const payload = {
+      name: createCategoryDto.name,
+      userId: request.userId
+    }
+    return this.categoryService.create(payload)
   }
 
   @Patch(':id')

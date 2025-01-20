@@ -11,15 +11,6 @@ import { AuthGuard } from '../auth/auth.guard'
 export class TransactionController {
   constructor(private readonly transactionService: TransactionService) {}
 
-  @Post()
-  create(@Request() request, @Body() createTransactionDto: CreateTransactionDto) {
-    const payload = {
-      ...createTransactionDto,
-      userId: request.userId
-    }
-    return this.transactionService.create(payload)
-  }
-
   @Get()
   findAll(@Request() request) {
     return this.transactionService.findAll(request.userId)
@@ -28,6 +19,14 @@ export class TransactionController {
   @Get(':id')
   findOne(@Request() request, @Param('id') id: string) {
     return this.transactionService.findOne(id, request.userId)
+  }
+  @Post()
+  create(@Request() request, @Body() createTransactionDto: CreateTransactionDto) {
+    const payload = {
+      ...createTransactionDto,
+      userId: request.userId
+    }
+    return this.transactionService.create(payload)
   }
 
   @Patch(':id')
